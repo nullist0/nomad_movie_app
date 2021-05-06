@@ -1,47 +1,71 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-function Food({ name, picture, rating }) {
-  return (
-    <div>
-      <h3>I like {name}</h3>
-      <h4>{rating}/5.0</h4>
-      <img src={picture} alt={name} />
-    </div>
-  );
-}
+// function component
+// function App() {
+//   return (
+//     <div>
+//       { foodILike.map(renderFood) }
+//     </div>
+//   );
+// }
 
-Food.propTypes = {
-  name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
-  rating: PropTypes.number
-};
+// class component
+class App extends React.Component {
+  state = {
+    count: 0
+  };
+  add= () => {
+    console.log("add");
+    this.setState(current => ({count: current.count + 1}));
+  };
+  subtract= () => {
+    console.log("subtract");
+    // don't use this.state when setState
+    // this.setState({count: this.state.count - 1});
+    this.setState(current => ({count: current.count - 1}));
+  };
 
-const foodILike = [
-  {
-    id:1,
-    name: "kimchi",
-    image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.ffd.co.kr%2Fshop-constant%2F%3Fidx%3D41&psig=AOvVaw2puRSdRMOVye2iMELijIbF&ust=1620387355997000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOi3_bf7tPACFQAAAAAdAAAAABAE",
-  },
-  {
-    id:2,
-    name: "ramen",
-    image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fhealth.chosun.com%2Fsite%2Fdata%2Fhtml_dir%2F2020%2F09%2F07%2F2020090702907.html&psig=AOvVaw0ChytBmEW8-rbTJ4oDX3nm&ust=1620387382600000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMCv68T7tPACFQAAAAAdAAAAABAD",
-    rating: 4.2
-  }
-];
+  // life cycle
 
-function renderFood(v) {
-  console.log(v);
-  return (<Food key={v.id} name={v.name} picture={v.image} rating={v.rating}/>);
-}
+  // mounting
+  // constructor
+  // getDerivedStateFromProps
+  // render
+  // componentDidMount
 
-function App() {
-  return (
-    <div>
-      { foodILike.map(renderFood) }
-    </div>
-  );
+  // updating
+  // getDerivedStateFromProps
+  // shuoldComponentUpdate
+  // render
+  // getSnapshotBeforeUpdate
+  // componentDidUpdate
+
+  // unmounting
+  // componentWillUnmount
+
+  componentDidMount() {
+    console.log("component rendered");
+  };
+
+  componentDidUpdate() {
+    console.log("component updated");
+  };
+
+  componentWillUnmount() {
+    console.log("component unmounted");
+  };
+
+  render() {
+    console.log("rendering");
+    return (
+      <div>
+        <h1>The number is {this.state.count}</h1>
+        <button onClick={this.add}>Add</button>
+        <button onClick={this.subtract}>Subtract</button>
+      </div>
+    );
+  };
 }
 
 export default App;

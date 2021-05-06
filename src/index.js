@@ -8,3 +8,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+// <App> : react component App.js function call
+// HTML + JS => JSX

@@ -1,71 +1,53 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import axios from "axios";
+import Movie from "./Movie";
+import "./App.css";
 
-// function component
-// function App() {
-//   return (
-//     <div>
-//       { foodILike.map(renderFood) }
-//     </div>
-//   );
-// }
-
-// class component
 class App extends React.Component {
   state = {
-    count: 0
-  };
-  add= () => {
-    console.log("add");
-    this.setState(current => ({count: current.count + 1}));
-  };
-  subtract= () => {
-    console.log("subtract");
-    // don't use this.state when setState
-    // this.setState({count: this.state.count - 1});
-    this.setState(current => ({count: current.count - 1}));
+    isLoading: true,
+    movies: []
   };
 
-  // life cycle
-
-  // mounting
-  // constructor
-  // getDerivedStateFromProps
-  // render
-  // componentDidMount
-
-  // updating
-  // getDerivedStateFromProps
-  // shuoldComponentUpdate
-  // render
-  // getSnapshotBeforeUpdate
-  // componentDidUpdate
-
-  // unmounting
-  // componentWillUnmount
+  getMovies = async () => {
+    const {data: {data: { movies }}} = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json?sort_by=rating");
+    this.setState({ movies, isLoading: false });
+  };
+  
+  readMovies = (movie) => {
+    return <Movie 
+      key={movie.id}
+      id={movie.id} 
+      year={movie.year} 
+      title={movie.title} 
+      summary={movie.summary}
+      poster={movie.medium_cover_image}
+      genres={movie.genres}
+    />
+  };
 
   componentDidMount() {
-    console.log("component rendered");
-  };
-
-  componentDidUpdate() {
-    console.log("component updated");
-  };
-
-  componentWillUnmount() {
-    console.log("component unmounted");
-  };
+    this.getMovies();
+  }
 
   render() {
-    console.log("rendering");
+    const { isLoading, movies } = this.state;
     return (
-      <div>
-        <h1>The number is {this.state.count}</h1>
-        <button onClick={this.add}>Add</button>
-        <button onClick={this.subtract}>Subtract</button>
-      </div>
+      <section className="container">
+        {
+          isLoading 
+            ? (<div className="loader">
+              <span className="loader__text">Loading...</span>
+            </div>)
+            : (
+              <div className="movies">
+                {movies.map(this.readMovies)}
+              </div>
+            )
+        }
+      </section>
     );
-  };
+  }
 }
 
 export default App;
